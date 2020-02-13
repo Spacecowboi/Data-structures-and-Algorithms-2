@@ -35,7 +35,11 @@ Write a function named sortByLength that takes in an array of strings and return
 ------------------------------------------------------------------------------------------------ */
 
 const sortByLength = (arr) => {
-  // Solution code here...
+  arr.sort((a,b) =>{
+    //write return function
+    return a.length < b.length ? -1 : 1;
+  });
+  return arr;
 };
 
 /* ------------------------------------------------------------------------------------------------
@@ -47,7 +51,11 @@ For example, ['Alphabet', 'alphabet', 'carrot', 'Zebra'] is correctly sorted, an
 ------------------------------------------------------------------------------------------------ */
 
 const alphabetizeBetter = (arr) => {
-  // Solution code here...
+  arr.sort((a,b) =>{
+    //return in lowercase?
+    return a.toLowerCase() < b.toLowerCase() ? -1 : 1;
+  });
+  return arr;
 };
 
 /* ------------------------------------------------------------------------------------------------
@@ -61,10 +69,29 @@ Here is an example of the input:
   {name: 'Bookmark', price: 2.50},
   {name: 'Tote bag', price: 15}
 ];
+
+describe('Testing challenge 5', () => {
+  test('It should sort items by their price', () => {
+    expect(sortByPrice([
+      {name: 'Sweatshirt', price: 45,},
+      {name: 'Bookmark', price: 2.50,},
+      {name: 'Tote bag', price: 15,}
+    ])).toStrictEqual([
+      {name: 'Bookmark', price: 2.50,},
+      {name: 'Tote bag', price: 15,},
+      {name: 'Sweatshirt', price: 45,}
+    ]);
+    expect(sortByPrice([{price: 12,}, {price: 10,}])).toStrictEqual([{price: 10,}, {price: 12,}]);
+    expect(sortByPrice([])).toStrictEqual([]);
+  });
+});
 ------------------------------------------------------------------------------------------------ */
 
 const sortByPrice = (arr) => {
-  // Solution code here...
+  arr.sort((a,b) =>{
+    return a.price < b.price ? -1 : 1;
+  });
+  return arr;
 };
 
 /* ------------------------------------------------------------------------------------------------
@@ -76,7 +103,11 @@ For example, [1, 14, 0.2, -281, 54782] is only correctly sorted in that order.
 ------------------------------------------------------------------------------------------------ */
 
 const sortNumbersByLength = (arr) => {
-  // Solution code here...
+  arr.sort((a,b) =>{
+    //target number by index?
+    return a.length < b.length ? -1 : 1;
+  });
+  return arr;
 };
 
 /*-----------------------------------------------------------------------------------------------
