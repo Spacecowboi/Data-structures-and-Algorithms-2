@@ -26,18 +26,30 @@ Return an array containing all the matches.
 ------------------------------------------------------------------------------------------------ */
 
 const isCapitalized = (str) => {
-  let regex = /[A-Z]+/g;
-  return str.match(regex);
+  let regex = /\b[A-Z][a-z]*\b/g;
+  let answer = str.match(regex);
+  if(answer){
+    return answer;
+  } else{
+    return [];
+  }
 };
-
 /* ------------------------------------------------------------------------------------------------
+
 CHALLENGE 3
 
 Write a function named citiesAtoJ that takes in an array of city names and uses a regular expression pattern to return a new array containing any cities that begin with the letters A through J, inclusive.
 ------------------------------------------------------------------------------------------------ */
 
 const citiesAtoJ = (arr) => {
-  // Solution code here...
+  let regex = /^[A-J]*\w+/mg;
+  let solutionArray = [];
+  arr.forEach(city => {
+    if(regex.test(city)){
+      solutionArray.push(city);
+    }
+  });
+  return solutionArray;
 };
 
 /* ------------------------------------------------------------------------------------------------
@@ -53,7 +65,8 @@ Do not use the vertical bar (pipe) in your pattern.
 ------------------------------------------------------------------------------------------------ */
 
 const matchMonth = (input) => {
-  // Solution code here...
+  let regex = /\bOct|oct(ober)?\b/gm;
+  return regex.test(input);
 };
 
 /* ------------------------------------------------------------------------------------------------
