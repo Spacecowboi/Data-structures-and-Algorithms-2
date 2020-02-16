@@ -101,11 +101,11 @@ Write a function named sortNumbersByLength that takes in an array of numbers and
 
 For example, [1, 14, 0.2, -281, 54782] is only correctly sorted in that order.
 ------------------------------------------------------------------------------------------------ */
-
+//worked with sue tarazi for this question
 const sortNumbersByLength = (arr) => {
   arr.sort((a,b) =>{
     //target number by index?
-    return a.length < b.length ? -1 : 1;
+    return a.length < b.length ? 1 : -1;
   });
   return arr;
 };
@@ -145,16 +145,15 @@ If two people share the same last name, alphabetize on their first name.
 If two people have the same full name, the younger one should come first. Do not worry about capitalization.
 ------------------------------------------------------------------------------------------------ */
 
-const sortPeopleBetter = (arr) => {
-  arr.sort((a,b) => {
-    if(a.lastName < b.lastName){
-      return 1; // -1?
-    } else (a.lastName > b.lastName ){
-        return -1;
-        console.log(sortPeopleBetter)
-    }
-  });
-};
+// const sortPeopleBetter = (arr) => {
+//   arr.sort((a,b) => {
+//     if(a.lastName < b.lastName){
+//       return 1; // -1?
+//     } else (a.lastName > b.lastName ){
+//         return -1;}
+//     });
+//     console.log(sortPeopleBetter)
+// };
 
 /* ------------------------------------------------------------------------------------------------
 CHALLENGE 9 - Stretch Goal
