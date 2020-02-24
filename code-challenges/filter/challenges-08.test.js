@@ -9,7 +9,7 @@ For example, oddValues([1,2,3]) returns [1,3].
 ------------------------------------------------------------------------------------------------ */
 
 const oddValues = (arr) => {
-  return arr.filter(num => %2!==0);
+  return arr.filter(num => num % 2 !== 0);
 };
 
 /* ------------------------------------------------------------------------------------------------
@@ -24,7 +24,9 @@ For example, filterStringsWithVowels('gregor','hound','xyz') returns ['gregor', 
 
 
 const filterStringsWithVowels = (arr) => {
-  // Solution code here...
+  //MORE REGEX!!!
+  let regex = /[aeiou]/;
+  return arr.filter(str => regex.test(str.toLowerCase()));
 };
 
 
@@ -37,7 +39,7 @@ For example, notInFirstArray([1,2,3], [1,2,3,4]) returns [4].
 ------------------------------------------------------------------------------------------------ */
 
 const notInFirstArray = (forbiddenValues, arr) => {
-  // Solution code here...
+  return arr.filter(value => !forbiddenValues.includes(value));
 };
 
 /* ------------------------------------------------------------------------------------------------
@@ -73,14 +75,14 @@ const snorlaxData = {
       },
       effort: 9,
       baseStat: 65,
-    },
+    }
   ],
   name: 'snorlax',
   weight: 4600,
 };
 
 const getBaseStatGreaterThan = (arr, minBaseStat) => {
-  // Solution code here...
+  return arr.filter(stat => baseStat>minBaseStat);
 };
 
 /* ------------------------------------------------------------------------------------------------
@@ -92,7 +94,8 @@ For example, getStatName(snorlaxData.stats, 50) will return ['special-defense', 
 ------------------------------------------------------------------------------------------------ */
 
 const getStatName = (arr, minBaseStat) => {
-  // Solution code here...
+  let newArray = getBigBoyStats(arr,minBaseStat);
+  return newArray.map(obj => obj.stat.name);
 };
 
 /* ------------------------------------------------------------------------------------------------
@@ -141,11 +144,11 @@ const characters = [
     name: 'Jon',
     spouse: null,
     house: 'Snow',
-  },
+  }
 ];
 
 const getCharactersWithoutChildren = (arr) => {
-  // Solution code here...
+  return arr.filter(obj => !obj.children);
 };
 
 /* ------------------------------------------------------------------------------------------------
@@ -219,12 +222,12 @@ describe('Testing challenge 3', () => {
 
 describe('Testing challenge 4', () => {
   test('It should return an array containing the stats that are greater than the input', () => {
-    expect(getBaseStatGreaterThan(snorlaxData.stats, 75)).toStrictEqual([ { stat: { url: 'https://pokeapi.co/api/v2/stat/5/', name: 'special-defense' }, effort: 2, baseStat: 110 } ]);
+    expect(getBaseStatGreaterThan(snorlaxData.stats, 75)).toStrictEqual([ { stat: { url: 'https://pokeapi.co/api/v2/stat/5/', name: 'special-defense', }, effort: 2, baseStat: 110, } ]);
     expect(getBaseStatGreaterThan(snorlaxData.stats, 75).length).toStrictEqual(1);
     expect(getBaseStatGreaterThan(snorlaxData.stats, 110)).toStrictEqual([]);
   });
   test('It should work for non-Snorlax data', () => {
-    expect(getBaseStatGreaterThan([{baseStat: 10}, {baseStat: -85}, {baseStat: 0}, {baseStat: -50}], -60)).toStrictEqual([{baseStat: 10}, {baseStat: 0}, {baseStat: -50}]);
+    expect(getBaseStatGreaterThan([{baseStat: 10,}, {baseStat: -85,}, {baseStat: 0,}, {baseStat: -50,}], -60)).toStrictEqual([{baseStat: 10,}, {baseStat: 0,}, {baseStat: -50,}]);
   });
 });
 
@@ -241,17 +244,17 @@ describe('Testing challenge 5', () => {
 
   test('It should work for non-snorlax data', () => {
     expect(getStatName([
-      {baseStat: 10, stat: {name: 'one'}},
-      {baseStat: -85, stat: {name: 'two'}},
-      {baseStat: 0, stat: {name: 'three'}},
-      {baseStat: -50, stat: {name: 'four'}}
+      {baseStat: 10, stat: {name: 'one',},},
+      {baseStat: -85, stat: {name: 'two',},},
+      {baseStat: 0, stat: {name: 'three',},},
+      {baseStat: -50, stat: {name: 'four',},}
     ], -60)).toStrictEqual(['one', 'three', 'four']);
   });
 });
 
 describe('Testing challenge 6', () => {
   test('It should return an array containing characters who do not have children', () => {
-    expect(getCharactersWithoutChildren(characters)).toStrictEqual([ { name: 'Sansa', spouse: 'Tyrion', house: 'Stark' }, { name: 'Jon', spouse: null, house: 'Snow' } ]);
+    expect(getCharactersWithoutChildren(characters)).toStrictEqual([ { name: 'Sansa', spouse: 'Tyrion', house: 'Stark', }, { name: 'Jon', spouse: null, house: 'Snow', } ]);
     expect(getCharactersWithoutChildren(characters).length).toStrictEqual(2);
   });
 });
