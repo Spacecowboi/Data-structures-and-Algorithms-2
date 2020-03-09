@@ -11,7 +11,12 @@ For example, count(5, [[1, 3, 5, 7, 9], [5, 5, 5], [1, 2, 3]]) returns 4.
 ------------------------------------------------------------------------------------------------ */
 
 const count = (target, input) => {
-  //sum
+  let reducedArr = input.reduce((count, subArr) => {
+    let targetCount = subArr.filter(num => num === target).length;
+    return count + targetCount;
+  },0);
+  return reducedArr;
+
 };
 
 /* ------------------------------------------------------------------------------------------------
@@ -25,7 +30,13 @@ For example, [[1, 2, 3, 4, 5], [6, 7, 2, 4, 5, 7], [9, 2, 3, 6,]] returns 66.
 ------------------------------------------------------------------------------------------------ */
 
 const totalSum = (input) => {
-  // Solution code here...
+  let sum = 0;
+  input.map(arr=>{
+    arr.map(value =>{
+      sum += value;
+    });
+  });
+  return sum;
 };
 
 /* ------------------------------------------------------------------------------------------------
@@ -41,7 +52,10 @@ For example, [ [0,2,5,4], [2,4,10], [] ] should return [ [1, 32], [1024], [] ].
 ------------------------------------------------------------------------------------------------ */
 
 const divisibleByFiveTwoToThePower = (input) => {
-  // Solution code here...
+  return input.map(arr=>{
+    let newArray = arr.filter(value=>value % 5 === 0 && typeof(value) === 'number');
+    return newArray.map(value=>Math.pow(2,value));
+  });
 };
 
 /* ------------------------------------------------------------------------------------------------
@@ -73,7 +87,7 @@ let starWarsData = [{
   skin_color: 'gold',
   eye_color: 'yellow',
   birth_year: '112BBY',
-  gender: 'n/a'
+  gender: 'n/a',
 },
 {
   name: 'R2-D2',
@@ -83,7 +97,7 @@ let starWarsData = [{
   skin_color: 'white, blue',
   eye_color: 'red',
   birth_year: '33BBY',
-  gender: 'n/a'
+  gender: 'n/a',
 },
 {
   name: 'Darth Vader',
@@ -93,7 +107,7 @@ let starWarsData = [{
   skin_color: 'white',
   eye_color: 'yellow',
   birth_year: '41.9BBY',
-  gender: 'male'
+  gender: 'male',
 },
 {
   name: 'Leia Organa',
@@ -103,11 +117,16 @@ let starWarsData = [{
   skin_color: 'light',
   eye_color: 'brown',
   birth_year: '19BBY',
-  gender: 'female'
+  gender: 'female',
 }];
 
 let findMaleAndFemale = (data) => {
-  // Solution code here...
+  let filteredData = data.filter(character=>character.gender === 'male' || character.gender === 'female');
+  let resultString = '';
+  filteredData.forEach(character=>{
+    resultString += `${character.name} and `;
+  });
+  return resultString.slice(0, resultString.length - 5);
 };
 
 /* ------------------------------------------------------------------------------------------------
@@ -117,7 +136,13 @@ Write a function named findShortest that, given the Star Wars data from Challeng
 ------------------------------------------------------------------------------------------------ */
 
 let findShortest = (data) => {
-  // Solution code here...
+  const shortestHeight = data.reduce((cur, char) => {
+    if(parseInt(char.height) < cur) {
+      cur = char.height;
+    }
+    return cur;
+  },999);
+  return data.filter(char => char.height === shortestHeight)[0].name;
 };
 
 /* ------------------------------------------------------------------------------------------------
@@ -145,7 +170,7 @@ describe('Testing challenge 1', () => {
 
 describe('Testing challenge 2', () => {
   test('It should add all the numbers in the arrays', () => {
-    const nums = [[1, 2, 3, 4, 5], [6, 7, 2, 4, 5, 7], [9, 2, 3, 6,]];
+    const nums = [[1, 2, 3, 4, 5], [6, 7, 2, 4, 5, 7], [9, 2, 3, 6]];
 
     expect(totalSum(nums)).toStrictEqual(66);
   });
@@ -168,7 +193,7 @@ describe('Testing challenge 3', () => {
 describe('Testing challenge 4', () => {
   test('It should return only characters that are male or female', () => {
     expect(findMaleAndFemale(starWarsData)).toStrictEqual('Luke Skywalker and Darth Vader and Leia Organa');
-    expect(findMaleAndFemale([{ name: 'person', gender: 'female' }, { gender: 'lol' }, { name: 'persontwo', gender: 'male' }])).toStrictEqual('person and persontwo');
+    expect(findMaleAndFemale([{ name: 'person', gender: 'female', }, { gender: 'lol', }, { name: 'persontwo', gender: 'male', }])).toStrictEqual('person and persontwo');
   });
 });
 
