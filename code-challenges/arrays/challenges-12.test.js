@@ -23,7 +23,12 @@ const alkiBeach = [33, 31, 147, 130, 27, 93, 38, 126, 141, 63, 46, 17];
 const cookieStores = [firstPike, seaTac, seattleCenter, capHill, alkiBeach];
 
 const grandTotal = (stores) => {
-  // Solution code here...
+  let hourlySales = hoursOpen.map((hour, hourIndex)=>{
+    return stores.reduce((hourlyTotal, store)=>{
+      return hourlyTotal + store[hourIndex];
+    },0);
+  });
+  return hourlySales;
 
 };
 
@@ -38,7 +43,11 @@ Write a function named salesData that uses forEach to iterate over the hourlySal
 ------------------------------------------------------------------------------------------------ */
 
 const salesData = (hours, data) => {
-  // Solution code here...
+  let hourlySalesArr = [];
+  data.forEach((hourSales, hourIndex)=>{
+    hourlySalesArr.push({'sales':`${hourSales} cookies`,'time':hours[hourIndex],});
+  });
+  return hourlySalesArr;
 };
 
 /* ------------------------------------------------------------------------------------------------
@@ -49,18 +58,26 @@ Write a function named howManyTreats that will return the quantity of treats you
 
 const errands = [
   { store: 'Grocery store',
-    items: [ { name: 'Eggs', quantity: 12 }, { name: 'Milk', quantity: 1 }, { name: 'Apples', quantity: 3 }]
+    items: [ { name: 'Eggs', quantity: 12, }, { name: 'Milk', quantity: 1, }, { name: 'Apples', quantity: 3, }],
   },
   { store: 'Drug store',
-    items: [ { name: 'Toothpaste', quantity: 1 }, { name: 'Toothbrush', quantity: 3 }, { name: 'Mouthwash',quantity: 1 } ]
+    items: [ { name: 'Toothpaste', quantity: 1, }, { name: 'Toothbrush', quantity: 3, }, { name: 'Mouthwash',quantity: 1, } ],
   },
   { store: 'Pet store',
-    items: [ { name: 'Cans of food', quantity: 8 }, { name: 'Treats', quantity: 24 }, { name: 'Leash', quantity: 1 } ]
+    items: [ { name: 'Cans of food', quantity: 8, }, { name: 'Treats', quantity: 24, }, { name: 'Leash', quantity: 1, } ],
   }
 ];
 
 const howManyTreats = (arr) => {
-  // Solution code here...
+  let treatAmount = 0;
+  arr.forEach(store => {
+    store.items.forEach(item => {
+      if(item.name === 'Treats') {
+        treatAmount += item.quantity;
+      }
+    });
+  });
+  return treatAmount;
 };
 
 /* ------------------------------------------------------------------------------------------------
@@ -82,7 +99,12 @@ The top row of the board is considered row zero and row numbers increase as they
 ------------------------------------------------------------------------------------------------ */
 
 const battleship = (board, row, col) => {
-  //  Solution code here...
+  let target = board[row][col];
+  if(target === '#'){
+    return 'hit';
+  } else if(target === ' '){
+    return 'miss';
+  }
 };
 
 /* ------------------------------------------------------------------------------------------------
@@ -94,7 +116,13 @@ For example, the following input returns a product of 720: [[1,2], [3,4], [5,6]]
 ------------------------------------------------------------------------------------------------ */
 
 const calculateProduct = (numbers) => {
-  // Solution code here...
+  let calculation = 1;
+  numbers.forEach(subArr => {
+    subArr.forEach(num => {
+      calculation *= num;
+    });
+  });
+  return calculation;
 };
 
 /* ------------------------------------------------------------------------------------------------
@@ -110,11 +138,18 @@ const weeklyTemperatures = [
   [66, 64, 58, 65, 71, 57, 60],
   [57, 65, 65, 70, 72, 65, 51],
   [55, 54, 60, 53, 59, 57, 61],
-  [65, 56, 55, 52, 55, 62, 57],
+  [65, 56, 55, 52, 55, 62, 57]
 ];
 
 const averageDailyTemperature = (weather) => {
-  // Solution code here...
+  let countOfTemps = 0;
+  let sumOfTemps = weeklyTemperatures.reduce((totalSum, week)=>{
+    return totalSum + week.reduce((sum, temp)=>{
+      countOfTemps++;
+      return sum + temp;
+    },0);
+  },0);
+  return sumOfTemps / countOfTemps;
 };
 
 /* ------------------------------------------------------------------------------------------------
@@ -131,11 +166,24 @@ let lowestWeeklyTemperatureData = [
   [33, 64, 58, 65, 71, 57, 60],
   [40, 45, 33, 53, 44, 59, 48],
   [55, 54, 60, 53, 59, 57, 61],
-  [65, 56, 55, 52, 55, 62, 57],
+  [65, 56, 55, 52, 55, 62, 57]
 ];
 
 const lowestWeeklyAverage = (weather) => {
-  // Solution code here...
+  let lowestAverage = Infinity;
+  weather.forEach(week => {
+    let weeklyTotal = 0;
+    let dayTotal = 0;
+    week.forEach(temp => {
+      weeklyTotal += temp;
+      dayTotal++;
+    });
+    let weeklyAverage = weeklyTotal / dayTotal;
+    if(weeklyAverage < lowestAverage) {
+      lowestAverage = weeklyAverage;
+    }
+  });
+  return lowestAverage;
 };
 
 /* ------------------------------------------------------------------------------------------------
@@ -151,7 +199,13 @@ For example, excel('1,1,1\n4,4,4\n9,9,9') returns [3, 12, 27].
 ------------------------------------------------------------------------------------------------ */
 
 const excel = (str) => {
-  // Solution code here...
+  let strArray = str.split('\n');
+  let strTable = strArray.map(string=>string.split(','));
+  return strTable.map(row => {
+    return row.reduce((sum,stringNumber)=>{
+      return sum + Number(stringNumber);
+    },0);
+  });
 };
 
 /* ------------------------------------------------------------------------------------------------
@@ -175,18 +229,18 @@ describe('Testing challenge 1', () => {
 describe('Testing challenge 2', () => {
   test('It should create an object of data for each store', () => {
     expect(salesData(hoursOpen, grandTotal(cookieStores))).toStrictEqual([
-      { sales: '88 cookies', time: '9 a.m.' },
-      { sales: '153 cookies', time: '10 a.m.' },
-      { sales: '252 cookies', time: '11 a.m.' },
-      { sales: '286 cookies', time: '12 p.m.' },
-      { sales: '139 cookies', time: '1 p.m.' },
-      { sales: '161 cookies', time: '2 p.m.' },
-      { sales: '145 cookies', time: '3 p.m.' },
-      { sales: '232 cookies', time: '4 p.m.' },
-      { sales: '276 cookies', time: '5 p.m.' },
-      { sales: '207 cookies', time: '6 p.m.' },
-      { sales: '161 cookies', time: '7 p.m.' },
-      { sales: '169 cookies', time: '8 p.m.' }
+      { sales: '88 cookies', time: '9 a.m.', },
+      { sales: '153 cookies', time: '10 a.m.', },
+      { sales: '252 cookies', time: '11 a.m.', },
+      { sales: '286 cookies', time: '12 p.m.', },
+      { sales: '139 cookies', time: '1 p.m.', },
+      { sales: '161 cookies', time: '2 p.m.', },
+      { sales: '145 cookies', time: '3 p.m.', },
+      { sales: '232 cookies', time: '4 p.m.', },
+      { sales: '276 cookies', time: '5 p.m.', },
+      { sales: '207 cookies', time: '6 p.m.', },
+      { sales: '161 cookies', time: '7 p.m.', },
+      { sales: '169 cookies', time: '8 p.m.', }
     ]);
 
     expect(salesData(hoursOpen, grandTotal(cookieStores)).length).toStrictEqual(hoursOpen.length);
@@ -205,7 +259,7 @@ describe('Testing challenge 4', () => {
     ['#', ' ', '#', ' '],
     ['#', ' ', '#', ' '],
     ['#', ' ', ' ', ' '],
-    [' ', ' ', '#', '#'],
+    [' ', ' ', '#', '#']
   ];
 
   test('It should return "hit" when it hits a boat', () => {
